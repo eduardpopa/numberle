@@ -2,7 +2,7 @@
 
 This is a JSF implementation of numberle game.
 
-- ## [Game rules]
+- ## Game rules
 
   The goal is to guess the six digit number within six attepts. After each check the number is validated and each digit box is colored according to fllowing rules:
 
@@ -13,7 +13,7 @@ This is a JSF implementation of numberle game.
   5. YELLOW - digit is present in the solution once but the real position is on the left side.
      > Rules applied in the specified order, so valid digits are excluded for the following colored hints.
 
-- ## [Structure]
+- ## Structure
 
 The game logic is defined in the named bean `./src/main/java/lu/uni/numberle/GameBean.java` and it is using `./ejb/SolutionGeneratorBean.java` to generate a random number with a specified size, it is reading a random line from file `./webapp/resources/numbers.txt` and append extra digits if the requested size is grater.
 
