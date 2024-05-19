@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xml:lang="en">
+
+<ui:composition template="templates/page.xhtml">
+  <ui:define name="header">
+    Guess the <b>${game.solutionSize}</b> digits number in less than <b>${game.maxAttempts}</b> attempts.
+  </ui:define>
+  <ui:define name="content">
+
+    <h:panelGroup rendered="${empty game.input}">
+      <h:panelGrid columns="2">
+        <h:inputText value="?" class="digit UNKNOWN" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Not validated digit." class="hint" />
+        <h:inputText value="?" class="digit VALID" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Valid digit in the correct position." class="hint" />
+        <h:inputText value="?" class="digit INVALID" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Invalid digit." class="hint" />
+        <h:inputText value="?" class="digit MULTIPLE" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Existing digit multiple times on wrong positions." class="hint" />
+        <h:inputText value="?" class="digit LEFT" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Existing digit positioned on the left." class="hint" />
+        <h:inputText value="?" class="digit RIGHT" size="1" maxlength="1" readonly="true"> </h:inputText>
+        <h:outputText value="Existing digit positioned on the right." class="hint" />
+      </h:panelGrid>
+      <br />
+      <h:form>
+        <h:commandButton value="Start" action="${game.play}" />
+      </h:form>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="${not empty game.input}">
+      <h:form>
+        <table>
+          <ui:repeat value="#{game.input}" var="guess" varStatus="guessLoop">
+            <tr>
+              <td class="row-action"></td>
+              <ui:repeat value="#{guess}" var="digit" varStatus="digitLoop">
+                <td class="${guessLoop.index eq game.noAttempts ? 'active': ''} ">
+                  <h:inputText value="#{digit.value}" size="1" maxlength="1" class="digit ${digit.state}" required="true" readonly="${guessLoop.index ne game.noAttempts}">
+                  </h:inputText>
+                </td>
+              </ui:repeat>
+              <td class="row-action ${guessLoop.index eq game.noAttempts ? 'active': ''}">
+                <h:commandButton value="Check" action="${game.verify}" rendered="${guessLoop.index eq game.noAttempts}" />
+              </td>
+            </tr>
+          </ui:repeat>
+        </table>
+      </h:form>
+    </h:panelGroup>
+
+  </ui:define>
+</ui:composition>
+
+</html>
