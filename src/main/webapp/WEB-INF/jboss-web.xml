@@ -4,5 +4,5 @@
            xsi:schemaLocation="urn:jboss:jakartaee:1.0 https://www.jboss.org/schema/jbossas/jboss-web_15_0.xsd"
            version="15.0">
 
-    <context-root>/numberele</context-root>
+    <context-root>/numberle</context-root>
 </jboss-web>
